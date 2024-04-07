@@ -27,25 +27,25 @@ class ViewController: UIViewController {
         setupTableView()
         setupNavigation()
         
-        //1
-          guard let appDelegate =
-            UIApplication.shared.delegate as? AppDelegate else {
-              return
-          }
-          
-          let managedContext =
+        //        //1
+        guard let appDelegate =
+                UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext =
         CoreDataManager.shared.persistentContainer.viewContext
-          
-          //2
-          let fetchRequest =
-            NSFetchRequest<NSManagedObject>(entityName: "Car")
-          
-          //3
-          do {
+        
+        //2
+        let fetchRequest =
+        NSFetchRequest<NSManagedObject>(entityName: "Car")
+        
+        //3
+        do {
             carsArray = try managedContext.fetch(fetchRequest)
-          } catch let error as NSError {
+        } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
-          }
+        }
         
     }
     
@@ -77,10 +77,10 @@ class ViewController: UIViewController {
     func showAlert() {
         let alertController = UIAlertController(title: "Add car", message: "Save your favourite cars", preferredStyle: .alert)
         
-                alertController.addTextField { textField in
-                    self.brandToSave = textField.text ?? "brand"
-                    textField.placeholder = "Brand"
-                }
+        alertController.addTextField { textField in
+            self.brandToSave = textField.text ?? "brand"
+            textField.placeholder = "Brand"
+        }
         
         alertController.addTextField { textField in
             self.modelToSave = textField.text ?? "model"
@@ -97,9 +97,9 @@ class ViewController: UIViewController {
             textField.placeholder = "Year"
         }
         
-               CoreDataManager.shared.save(brand: brandToSave, model: modelToSave, color: colorToSave, year: yearToSave) {
-        self.tableView.reloadData()
-   }
+        CoreDataManager.shared.save(brand: brandToSave, model: modelToSave, color: colorToSave, year: yearToSave) {
+            self.tableView.reloadData()
+        }
         
         let okAction = UIAlertAction(title: "OK", style: .default) {_ in
             print("ok")
