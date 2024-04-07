@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A73B1E4A2BC2DFC200FAA0E4 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73B1E492BC2DFC200FAA0E4 /* CoreDataManager.swift */; };
 		A79A66FE2BC1DFCA00E73FA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79A66FD2BC1DFCA00E73FA3 /* AppDelegate.swift */; };
 		A79A67002BC1DFCA00E73FA3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79A66FF2BC1DFCA00E73FA3 /* SceneDelegate.swift */; };
 		A79A67022BC1DFCA00E73FA3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79A67012BC1DFCA00E73FA3 /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A73B1E492BC2DFC200FAA0E4 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		A79A66FA2BC1DFCA00E73FA3 /* HWlesson31.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HWlesson31.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A79A66FD2BC1DFCA00E73FA3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A79A66FF2BC1DFCA00E73FA3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 				A79A66FD2BC1DFCA00E73FA3 /* AppDelegate.swift */,
 				A79A66FF2BC1DFCA00E73FA3 /* SceneDelegate.swift */,
 				A79A67012BC1DFCA00E73FA3 /* ViewController.swift */,
+				A73B1E492BC2DFC200FAA0E4 /* CoreDataManager.swift */,
 				A79A67032BC1DFCA00E73FA3 /* Main.storyboard */,
 				A79A67092BC1DFCB00E73FA3 /* Assets.xcassets */,
 				A79A670B2BC1DFCB00E73FA3 /* LaunchScreen.storyboard */,
@@ -144,6 +147,7 @@
 				A79A67022BC1DFCA00E73FA3 /* ViewController.swift in Sources */,
 				A79A66FE2BC1DFCA00E73FA3 /* AppDelegate.swift in Sources */,
 				A79A67082BC1DFCA00E73FA3 /* HWlesson31.xcdatamodeld in Sources */,
+				A73B1E4A2BC2DFC200FAA0E4 /* CoreDataManager.swift in Sources */,
 				A79A67002BC1DFCA00E73FA3 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

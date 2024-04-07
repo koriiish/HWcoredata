@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController {
     
@@ -15,12 +16,37 @@ class ViewController: UIViewController {
         return tableView
     }()
     
-    var carsArray: [String] = []
+    var carsArray: [NSManagedObject] = []
+    var brandToSave: String = ""
+    var modelToSave: String = ""
+    var colorToSave: String = ""
+    var yearToSave: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
         setupNavigation()
+        
+        //1
+          guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+              return
+          }
+          
+          let managedContext =
+        CoreDataManager.shared.persistentContainer.viewContext
+          
+          //2
+          let fetchRequest =
+            NSFetchRequest<NSManagedObject>(entityName: "Car")
+          
+          //3
+          do {
+            carsArray = try managedContext.fetch(fetchRequest)
+          } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+          }
+        
     }
     
     private func setupTableView() {
@@ -51,26 +77,44 @@ class ViewController: UIViewController {
     func showAlert() {
         let alertController = UIAlertController(title: "Add car", message: "Save your favourite cars", preferredStyle: .alert)
         
-        alertController.addTextField { textField in
-            textField.placeholder = "Brand"
-        }
+                alertController.addTextField { textField in
+                    self.brandToSave = textField.text ?? "brand"
+                    textField.placeholder = "Brand"
+                }
         
         alertController.addTextField { textField in
+            self.modelToSave = textField.text ?? "model"
             textField.placeholder = "Model"
         }
         
         alertController.addTextField { textField in
+            self.colorToSave = textField.text ?? "color"
             textField.placeholder = "Color"
         }
         
         alertController.addTextField { textField in
+            self.yearToSave = textField.text ?? "year"
             textField.placeholder = "Year"
         }
         
+               CoreDataManager.shared.save(brand: brandToSave, model: modelToSave, color: colorToSave, year: yearToSave) {
+        self.tableView.reloadData()
+   }
+        
         let okAction = UIAlertAction(title: "OK", style: .default) {_ in
             print("ok")
+            guard let textField = alertController.textFields?.first,
+                  let nameToSave = textField.text else {
+                return
+            }
+            
+            //  self.carsArray.append(nameToSave)
+            self.save(name: nameToSave)
+            // CoreDataManager.shared.cars.append(nameToSave)
             self.tableView.reloadData()
+            
         }
+        
         alertController.addAction(okAction)
         
         let cancelAction = UIAlertAction(title: "cancel", style: .cancel, handler: nil)
@@ -78,6 +122,38 @@ class ViewController: UIViewController {
         
         present(alertController, animated: true)
     }
+    
+    func save(name: String) {
+        
+        guard let appDelegate =
+                UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        // 1
+        let managedContext =
+        CoreDataManager.shared.persistentContainer.viewContext
+        
+        // 2
+        let entity =
+        NSEntityDescription.entity(forEntityName: "Car",
+                                   in: managedContext)!
+        
+        let car = NSManagedObject(entity: entity,
+                                  insertInto: managedContext)
+        
+        // 3
+        car.setValue(name, forKeyPath: "brand")
+        
+        // 4
+        do {
+            try managedContext.save()
+            carsArray.append(car)
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -87,11 +163,20 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+        //        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell",
+        //                                            for: indexPath)
+        //        cell.textLabel?.text = carsArray[indexPath.row]
+        //        return cell
+        //
+        let car = carsArray[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell",
+                                                 for: indexPath)
+        cell.textLabel?.text =
+        car.value(forKeyPath: "brand") as? String
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 40
     }
 }
