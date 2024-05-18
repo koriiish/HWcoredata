@@ -23,7 +23,7 @@ class CoreDataManager {
     }()
     
     // MARK: - Database modification methods
-    func save(brand: String, model: String, color: String, year: String, completion: @escaping () -> ()) {
+    func save(brand: String, model: String, color: String, year: String, completion: @escaping (NSManagedObject) -> ()) {
         
         let managedContext = self.persistentContainer.viewContext
         guard let entityDescription = NSEntityDescription.entity(forEntityName: "Car",
@@ -38,7 +38,7 @@ class CoreDataManager {
         self.saveContext()
         self.cars.append(car)
         
-        completion()
+        completion(car)
     }
     
     func readBrand(at index: Int) -> String {
